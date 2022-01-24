@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyMain {
     // ********************
@@ -52,7 +53,13 @@ public class MyMain {
     // Tail Recursive Method:
     public static int sumTR(int[] arr, int i, int sum) {
         // YOUR CODE HERE
-        return -1;
+        if (i == arr.length){
+            return sum;
+        }
+        else{
+            return sumTR(arr, i + 1, sum + arr[i]);
+        }
+
     }
 
 
@@ -70,13 +77,20 @@ public class MyMain {
     // Wrapper Method (Provided for you):
     public static boolean search(ArrayList<Integer> list, int x) {
         // YOUR CODE HERE
-        return false;
+        return searchTR(list, x, 0);
     }
 
     // Tail Recursive Method:
     public static boolean searchTR(ArrayList<Integer> list, int x, int i) {
-        // YOUR CODE HERE
-        return false;
+        if(i == list.size()){
+            return false;
+        }
+        else{
+            if(list.get(i) == x){
+                return true;
+            }
+            return searchTR(list, x, i + 1);
+        }
     }
 
 
@@ -90,12 +104,22 @@ public class MyMain {
     // Wrapper Method (Provided for you):
     public static boolean allEven(int[] arr) {
         // YOUR CODE HERE
-        return false;
+        return allEvenTR(arr, 0);
     }
 
     // Tail Recursive Method:
     // You should write this yourself!
-
+    public static boolean allEvenTR(int[] arr, int x){
+        if(x == arr.length){
+            return true;
+        }
+        else{
+            if(arr[x] % 2 == 1){
+                return false;
+            }
+            return allEvenTR(arr, x + 1);
+        }
+    }
 
     // ********************
     // Examples From Class:
@@ -113,6 +137,7 @@ public class MyMain {
         else if (mat[row][col] == '*') {
             return;
         }
+
         else {
             // Leave "breadcrumbs"
             mat[row][col] = '*';
@@ -137,11 +162,22 @@ public class MyMain {
     // Wrapper method
     public static boolean hasCountCopies(int[] arr, int x, int count) {
         // YOUR CODE HERE
-        return false;
+        return hasCountCopiesTR(arr, x, count, 0, 0);
     }
 
     // You may want a tail recursive method
-
+    public static boolean hasCountCopiesTR(int[] arr, int x, int count, int actualCount, int iter) {
+        if(iter == arr.length){
+            return count == actualCount;
+        }
+        else{
+            if(arr[iter] == x){
+                actualCount ++;
+            }
+            return hasCountCopiesTR(arr, x, count, actualCount, iter + 1);
+        }
+        // YOUR CODE HERE
+    }
 
     // This recursive method checks if the array is sorted in
     // non-decreasing order
@@ -149,11 +185,22 @@ public class MyMain {
     // Wrapper method
     public static boolean isSorted(ArrayList<Integer> list) {
         // YOUR CODE HERE
-        return false;
+        return isSortedTR(list, 0);
     }
 
     // You may want a tail recursive method
-
+    public static boolean isSortedTR(ArrayList<Integer> list, int iter) {
+        // YOUR CODE HERE
+        if (iter == list.size() - 1){
+            return true;
+        }
+        else{
+            if(list.get(iter) > list.get(iter + 1)){
+                return false;
+            }
+            return isSortedTR(list, iter + 1);
+        }
+    }
 
 
 
@@ -180,11 +227,25 @@ public class MyMain {
     // escape(mat, 0, 2) => true because we should be able to make it to f at (1, 4)
     // escape(mat, 5, 1) => true because we should be able to make it to f at (1, 4)
     // escape(mat, 6, 5) => false because we get stuck
-
+    public static void printOutMat(char[][] mat){
+        for (int i = 0; i < mat.length; i ++){
+            System.out.println(Arrays.toString(mat[i]));
+        }
+        System.out.println(" ");
+    }
     // No tail recursion necessary!
     public static boolean escape(char[][] mat, int row, int col) {
         // YOUR CODE HERE
-        return false;
+        floodFill(mat, row, col);
+        printOutMat(mat);
+        for(int i = 0; i < mat.length; i ++){
+            for(int j = 0; j < mat[i].length; j ++){
+                if(mat[i][j] == 'f'){
+                    return false;
+                }
+            }
+    }
+        return true;
     }
 
 
